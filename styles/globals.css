@@ -1,23 +1,24 @@
 /* 
   Responsive Breakpoints:
-  - Mobile: 0–767px (default styles)
-  - Tablet: 768–1023px (@media (min-width: 768px))
-  - Desktop: 1024–1919px (@media (min-width: 1024px))
-  - TV / Large screens: 1920px+ (@media (min-width: 1920px))
+  - Mobile: 0-767px
+  - Tablet: 768-1023px
+  - Desktop: 1024-1919px
+  - TV / Large screens: 1920px+
 */
 
 /* Boldonse Font - Designed by Universitype */
 @font-face {
   font-family: 'Boldonse';
-  src: url('/fonts/Boldonse.woff2') format('woff2'),
-       url('/fonts/Boldonse.woff') format('woff'),
-       url('/fonts/Boldonse.ttf') format('truetype');
+  src:
+    url('/fonts/Boldonse.woff2') format('woff2'),
+    url('/fonts/Boldonse.woff') format('woff'),
+    url('/fonts/Boldonse.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
-/* Design tokens (CSS variables) */
+/* Design tokens */
 :root {
   /* Colors */
   --color-bg-primary: #3f3d6b;
@@ -34,7 +35,7 @@
   --text-letter-spacing: -0.011em;
   --text-line-height: 1.47059;
 
-  /* Spacing (8pt-ish scale) */
+  /* Spacing */
   --space-2: 0.5rem;
   --space-4: 1rem;
   --space-6: 1.5rem;
@@ -43,27 +44,72 @@
   --space-16: 4rem;
 }
 
-/* Reset styles */
-html {
-  scroll-behavior: smooth;
+/* Global reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-html,
+/* Root document */
+html {
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+  min-height: 100%;
+
+  scroll-behavior: smooth;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  background: var(--color-bg-primary);
+
+  overflow-x: hidden;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* Body */
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", system-ui, "Helvetica Neue", Arial, sans-serif;
-  background-color: #3f3d6b !important;
-  background-image: none !important;
-  color: white;
-  height: 100%;
+
   width: 100%;
+  min-height: 100%;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "SF Pro Text",
+    "Segoe UI",
+    system-ui,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  background-color: var(--color-bg-primary) !important;
+  background-image: none !important;
+
+  color: var(--color-text-primary);
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
   text-rendering: optimizeLegibility;
+
+  overflow-x: hidden;
 }
 
-/* Remove any pseudo-elements that might create patterns */
+/*
+  Remove any old CSS generated backgrounds.
+
+  The animated globe is rendered entirely by Three.js.
+*/
 html::before,
 html::after,
 body::before,
@@ -72,11 +118,109 @@ body::after {
   content: none !important;
 }
 
-* {
-  box-sizing: border-box;
+/*
+  NEXT.JS ROOT
+
+  isolation creates a predictable stacking context so the
+  Three.js globe can remain behind the entire website.
+*/
+#__next {
+  position: relative;
+
+  width: 100%;
+  min-height: 100vh;
+
+  isolation: isolate;
 }
 
-/* Ensure content is above the background */
+/*
+  THREE.JS GLOBE BACKGROUND
+
+  This canvas stays attached to the viewport while all
+  normal website content scrolls over it.
+
+  The camera itself sits inside the giant sphere.
+*/
+.globe-background {
+  position: fixed;
+
+  inset: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  z-index: 0;
+
+  pointer-events: none;
+
+  overflow: hidden;
+
+  /*
+    Prevent accidental interaction or selection.
+  */
+  user-select: none;
+  -webkit-user-select: none;
+
+  /*
+    Keeps the GPU rendering layer stable.
+  */
+  transform: translateZ(0);
+  will-change: transform;
+
+  /*
+    Three.js handles the actual transparency of
+    the white sphere lines.
+  */
+  background: transparent;
+}
+
+/*
+  Three.js canvas
+*/
+.globe-background canvas {
+  position: absolute;
+
+  inset: 0;
+
+  display: block;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  max-width: none;
+
+  pointer-events: none;
+
+  background: transparent;
+}
+
+/*
+  Everything else inside Next.js appears above
+  the Three.js environment.
+*/
+#__next > :not(.globe-background) {
+  position: relative;
+  z-index: 1;
+}
+
+/*
+  Main website content
+*/
+main {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+
+  background: transparent;
+}
+
+/*
+  Existing sections stay above the globe.
+
+  Do not apply solid backgrounds here because we want
+  the sphere to remain visible behind the site.
+*/
 .container,
 .layer,
 .pitchSection,
@@ -87,20 +231,24 @@ body::after {
   z-index: 1;
 }
 
+/* Links */
 a {
   color: inherit;
   text-decoration: none;
 }
 
-/* Typography */
+/* Typography reset */
 h1,
 h2,
 h3,
 p {
   margin: 0;
   padding: 0;
+
   cursor: default;
 }
+
+/* Mobile typography */
 
 h1 {
   font-size: 2rem;
@@ -124,32 +272,26 @@ h3 {
 }
 
 p {
-  font-size: 1.0625rem; /* 17px - Apple's preferred body size */
-  line-height: 1.47059; /* ~25px line-height for 17px font - Apple's standard */
+  font-size: 1.0625rem;
+  line-height: 1.47059;
   letter-spacing: -0.011em;
   font-weight: 400;
 }
 
-/* Scrollbar customization */
-html {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer and Edge */
-  display: flex;
-  justify-content: center;
-}
+/*
+  Tablet and Desktop
 
-html::-webkit-scrollbar {
-  display: none; /* Webkit-based browsers (Chrome, Safari, etc.) */
-}
-
-/* Tablet and Desktop: 768px+ - Enable scroll snap */
+  Preserve your full-screen section snapping.
+*/
 @media (min-width: 768px) {
   html {
     scroll-snap-type: y mandatory;
   }
 }
 
-/* Desktop: 1024–1919px */
+/*
+  Desktop
+*/
 @media (min-width: 1024px) {
   h1 {
     font-size: 4rem;
@@ -170,13 +312,39 @@ html::-webkit-scrollbar {
   }
 
   p {
-    font-size: 1.1875rem; /* 19px - Apple's preferred desktop body size */
-    line-height: 1.42105; /* ~27px line-height for 19px font */
+    font-size: 1.1875rem;
+    line-height: 1.42105;
     letter-spacing: -0.011em;
   }
 }
 
+/*
+  TV / Very large displays
+*/
+@media (min-width: 1920px) {
+  .globe-background {
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+/*
+  Reduced motion
+
+  The JavaScript component also checks this setting.
+  This CSS ensures the canvas itself receives no
+  unnecessary transition effects.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .globe-background,
+  .globe-background canvas {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
 /* Utility classes */
+
 .center-content {
   display: flex;
   justify-content: center;
@@ -185,17 +353,20 @@ html::-webkit-scrollbar {
 
 .full-screen {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
 }
 
-/* Shared animations (global) */
+/* Shared animations */
+
 @keyframes gradientWave {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -205,6 +376,7 @@ html::-webkit-scrollbar {
   0% {
     left: -100%;
   }
+
   50%,
   100% {
     left: 100%;

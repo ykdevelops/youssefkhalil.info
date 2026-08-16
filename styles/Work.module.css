@@ -232,6 +232,44 @@
     text-align: left !important;
   }
 
+  /* Blog section - same compact layout as Education on mobile */
+  :global(#blog) .workCompany {
+    padding: 1.25rem !important;
+    padding-bottom: 1.5rem !important;
+    gap: 0.5rem !important;
+    min-height: auto !important;
+    align-items: flex-start !important;
+  }
+
+  :global(#blog) .workLogo {
+    width: clamp(60px, 4vw, 75px) !important;
+    height: clamp(60px, 4vw, 75px) !important;
+    margin-right: 1rem !important;
+    margin-bottom: 0 !important;
+    padding: 0.25rem !important;
+    object-fit: cover !important;
+  }
+
+  :global(#blog) .workCompanyHeader {
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 1rem !important;
+    width: 100% !important;
+  }
+
+  :global(#blog) .workInfo {
+    padding: 0rem 0rem 0.75rem 0rem !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+
+  :global(#blog) .workCompanyTitle,
+  :global(#blog) .workPositionTitle,
+  :global(#blog) .workDate {
+    text-align: left !important;
+  }
+
   .workCompanyHeader {
     align-items: center;
     justify-content: center;
@@ -303,6 +341,47 @@
 
   :global(#education) .workInfo {
     padding: 0rem 0rem 0.75rem 0rem !important;
+  }
+
+  /* Blog section - same compact layout as Education on tablet */
+  :global(#blog) .workLogo {
+    width: clamp(60px, 4vw, 75px) !important;
+    height: clamp(60px, 4vw, 75px) !important;
+    margin-right: 1rem !important;
+    margin-bottom: 0 !important;
+    padding: 0.25rem !important;
+    object-fit: cover !important;
+  }
+
+  :global(#blog) .workCompany {
+    padding: 1.25rem !important;
+    padding-bottom: 1.5rem !important;
+    gap: 0.5rem !important;
+    width: 422px !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    min-height: auto !important;
+    align-items: flex-start !important;
+  }
+
+  :global(#blog) .workCompanyHeader {
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 1rem !important;
+    width: 100% !important;
+  }
+
+  :global(#blog) .workInfo {
+    padding: 0rem 0rem 0.75rem 0rem !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+
+  :global(#blog) .workCompanyTitle,
+  :global(#blog) .workPositionTitle,
+  :global(#blog) .workDate {
+    text-align: left !important;
   }
 
   .workContainer {
@@ -465,6 +544,26 @@
   }
 
   :global(#education) .workInfo {
+    padding: 0rem 0rem 0.75rem 0rem !important;
+  }
+
+  /* Blog section - same compact sizing as Education on desktop */
+  :global(#blog) .workLogo {
+    width: clamp(60px, 4vw, 75px) !important;
+    height: clamp(60px, 4vw, 75px) !important;
+    margin-right: 1rem !important;
+    padding: 0.25rem !important;
+    object-fit: cover !important;
+  }
+
+  :global(#blog) .workCompany {
+    padding: 1.25rem !important;
+    padding-bottom: 1.5rem !important;
+    gap: 0.5rem !important;
+    margin-bottom: 0 !important;
+  }
+
+  :global(#blog) .workInfo {
     padding: 0rem 0rem 0.75rem 0rem !important;
   }
 
@@ -649,6 +748,10 @@
     }
 
     :global(#education) .workCompany:hover {
+      transform: none !important;
+    }
+
+    :global(#blog) .workCompany:hover {
       transform: none !important;
     }
   }

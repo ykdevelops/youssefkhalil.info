@@ -4,7 +4,6 @@ import styles from '../styles/Home.module.css'
 import scrollStyles from '../styles/ScrollHint.module.css'
 import Intro from '../components/Intro'
 import Education from '../components/Education'
-import PersonalProjects from '../components/PersonalProjects'
 import Pitch from '../components/Pitch'
 import WorkExperience from '../components/WorkExperience'
 import Contact from '../components/Contact'
@@ -93,7 +92,6 @@ export default function Home() {
       <Pitch />
       <WorkExperience />
       <Education />
-      <PersonalProjects />
       <Contact />
     </div>
   )

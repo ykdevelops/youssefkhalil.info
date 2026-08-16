@@ -1,0 +1,57 @@
+/* Shared layout for /blog and /blog/[slug] — dedicated blog pages */
+
+.blogPage {
+  min-height: 100vh;
+  width: 100%;
+  padding: 2rem 1.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.blogPageInner {
+  width: 100%;
+  max-width: 720px;
+}
+
+.blogPageNav {
+  margin-bottom: 2rem;
+}
+
+.blogPageNavLink {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: color 0.2s ease;
+}
+
+.blogPageNavLink:hover {
+  color: white;
+}
+
+.blogPageTitle {
+  font-family: "Noto Kufi Arabic", sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  color: white;
+  margin: 0 0 0.25rem 0;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+
+.blogPageSubtitle {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  margin: 0 0 2.5rem 0;
+  line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+  .blogPage {
+    padding: 3rem 2rem 5rem;
+  }
+}

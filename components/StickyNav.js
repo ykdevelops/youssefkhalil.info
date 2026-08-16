@@ -6,7 +6,6 @@ const NAV_ITEMS = [
   { id: "service", label: "Service" },
   { id: "work", label: "Work" },
   { id: "education", label: "Education" },
-  { id: "projects", label: "Projects" },
   { id: "contact", label: "Contact" },
 ];
 
@@ -36,4 +35,3 @@ export default function StickyNav() {
     </div>
   );
 }
-
