@@ -89,7 +89,7 @@ export default function Home() {
       )}
 
       <Intro />
-      <Pitch />
+
       <WorkExperience />
       <Education />
       <Contact />

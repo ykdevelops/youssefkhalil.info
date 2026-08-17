@@ -5,18 +5,189 @@ import * as THREE from 'three'
 
 const DESKTOP_BREAKPOINT = 768
 
+const INITIAL_ROTATION = 0.12
+const AUTO_ROTATION_SPEED = 0.02
+const SCROLL_ROTATION_SPEED = 0.00002
+const SCROLL_DAMPING = 1.5
+
+function getGlobeConfig(isMobile) {
+  return {
+    radius: isMobile ? 115 : 140,
+    z: isMobile ? 30 : -100,
+    latitudeCount: isMobile ? 14 : 20,
+    longitudeCount: isMobile ? 18 : 28,
+    segments: isMobile ? 96 : 160,
+    opacity: isMobile ? 0.045 : 0.065,
+  }
+}
+
+/*
+ * Build every latitude and longitude line into
+ * one BufferGeometry.
+ *
+ * LineSegments expects pairs of vertices:
+ *
+ * [start, end]
+ * [start, end]
+ * [start, end]
+ */
+function createGlobeGeometry(config) {
+  const {
+    radius,
+    latitudeCount,
+    longitudeCount,
+    segments,
+  } = config
+
+  const positions = []
+
+  /*
+   * LATITUDE RINGS
+   */
+  for (let i = 1; i < latitudeCount; i++) {
+    const latitude =
+      (i / latitudeCount) * Math.PI -
+      Math.PI / 2
+
+    const y =
+      Math.sin(latitude) * radius
+
+    const ringRadius =
+      Math.cos(latitude) * radius
+
+    for (let j = 0; j < segments; j++) {
+      const angle1 =
+        (j / segments) * Math.PI * 2
+
+      const angle2 =
+        ((j + 1) / segments) * Math.PI * 2
+
+      positions.push(
+        Math.cos(angle1) * ringRadius,
+        y,
+        Math.sin(angle1) * ringRadius,
+
+        Math.cos(angle2) * ringRadius,
+        y,
+        Math.sin(angle2) * ringRadius
+      )
+    }
+  }
+
+  /*
+   * LONGITUDE LINES
+   */
+  for (let i = 0; i < longitudeCount; i++) {
+    const longitude =
+      (i / longitudeCount) * Math.PI * 2
+
+    for (let j = 0; j < segments; j++) {
+      const latitude1 =
+        (j / segments) * Math.PI -
+        Math.PI / 2
+
+      const latitude2 =
+        ((j + 1) / segments) * Math.PI -
+        Math.PI / 2
+
+      const x1 =
+        radius *
+        Math.cos(latitude1) *
+        Math.cos(longitude)
+
+      const y1 =
+        radius *
+        Math.sin(latitude1)
+
+      const z1 =
+        radius *
+        Math.cos(latitude1) *
+        Math.sin(longitude)
+
+      const x2 =
+        radius *
+        Math.cos(latitude2) *
+        Math.cos(longitude)
+
+      const y2 =
+        radius *
+        Math.sin(latitude2)
+
+      const z2 =
+        radius *
+        Math.cos(latitude2) *
+        Math.sin(longitude)
+
+      positions.push(
+        x1,
+        y1,
+        z1,
+
+        x2,
+        y2,
+        z2
+      )
+    }
+  }
+
+  const geometry = new THREE.BufferGeometry()
+
+  geometry.setAttribute(
+    'position',
+    new THREE.Float32BufferAttribute(
+      positions,
+      3
+    )
+  )
+
+  return geometry
+}
+
 export default function GlobeBackground() {
   const mountRef = useRef(null)
 
   useEffect(() => {
     const mount = mountRef.current
+
     if (!mount) return
 
-    const reducedMotion = window.matchMedia(
+    /*
+     * REDUCED MOTION
+     */
+    const motionQuery = window.matchMedia(
       '(prefers-reduced-motion: reduce)'
     )
 
-    const isMobile = window.innerWidth < DESKTOP_BREAKPOINT
+    let reducedMotion =
+      motionQuery.matches
+
+    const handleMotionChange = (event) => {
+      reducedMotion = event.matches
+    }
+
+    motionQuery.addEventListener(
+      'change',
+      handleMotionChange
+    )
+
+    /*
+     * SIZE
+     */
+    const getSize = () => ({
+      width:
+        mount.clientWidth ||
+        window.innerWidth,
+
+      height:
+        mount.clientHeight ||
+        window.innerHeight,
+    })
+
+    const initialSize = getSize()
+
+    let isMobile =
+      initialSize.width <
+      DESKTOP_BREAKPOINT
 
     /*
      * SCENE
@@ -25,208 +196,92 @@ export default function GlobeBackground() {
 
     /*
      * CAMERA
-     *
-     * Narrower FOV helps the background feel
-     * spherical instead of like a cylindrical tunnel.
      */
-    const camera = new THREE.PerspectiveCamera(
-      62,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      400
-    )
+    const camera =
+      new THREE.PerspectiveCamera(
+        62,
+        initialSize.width /
+          initialSize.height,
+        0.1,
+        400
+      )
 
     camera.position.set(0, 0, 0)
-    camera.rotation.set(0, 0, 0)
 
     /*
      * RENDERER
      */
-    const renderer = new THREE.WebGLRenderer({
-      alpha: true,
-      antialias: !isMobile,
-    })
+    const renderer =
+      new THREE.WebGLRenderer({
+        alpha: true,
+        antialias: !isMobile,
+        powerPreference: 'high-performance',
+      })
+
+    const getPixelRatio = (mobile) =>
+      Math.min(
+        window.devicePixelRatio || 1,
+        mobile ? 1.15 : 1.5
+      )
 
     renderer.setPixelRatio(
-      Math.min(
-        window.devicePixelRatio,
-        isMobile ? 1.15 : 1.5
-      )
+      getPixelRatio(isMobile)
     )
 
     renderer.setSize(
-      window.innerWidth,
-      window.innerHeight
+      initialSize.width,
+      initialSize.height,
+      false
     )
 
-    renderer.setClearColor(0x000000, 0)
-    renderer.outputColorSpace = THREE.SRGBColorSpace
+    renderer.setClearColor(
+      0x000000,
+      0
+    )
 
-    mount.appendChild(renderer.domElement)
+    /*
+     * Let CSS control the displayed canvas size.
+     */
+    renderer.domElement.style.width = '100%'
+    renderer.domElement.style.height = '100%'
+    renderer.domElement.style.display = 'block'
+
+    mount.appendChild(
+      renderer.domElement
+    )
 
     /*
      * GLOBE
-     *
-     * Camera remains inside the sphere, but the
-     * sphere's center is pushed behind the camera.
-     *
-     * This makes both latitude and longitude lines
-     * visibly curve and creates a spherical feeling.
      */
-    const globe = new THREE.Group()
+    let config =
+      getGlobeConfig(isMobile)
 
-    const radius = isMobile ? 115 : 140
+    let geometry =
+      createGlobeGeometry(config)
 
-    /*
-     * Move the center of the sphere away from
-     * the camera.
-     *
-     * The camera is still safely inside because
-     * the sphere radius is much larger than 40.
-     */
+    const material =
+      new THREE.LineBasicMaterial({
+        color: 0xffffff,
+        transparent: true,
+        opacity: config.opacity,
+        depthWrite: false,
+      })
+
+    const globe =
+      new THREE.LineSegments(
+        geometry,
+        material
+      )
+
     globe.position.set(
       0,
       0,
-      isMobile ? -30 : -40
+      config.z
     )
 
-    /*
-     * LINE MATERIAL
-     */
-    const lineMaterial = new THREE.LineBasicMaterial({
-      color: 0xffffff,
-      transparent: true,
-      opacity: isMobile ? 0.045 : 0.065,
-      depthWrite: false,
-    })
-
-    const geometries = []
-
-    /*
-     * HORIZONTAL LATITUDE RINGS
-     */
-    const latitudeCount = isMobile ? 14 : 20
-    const latitudeSegments = 160
-
-    for (let i = 1; i < latitudeCount; i++) {
-      const latitude =
-        (i / latitudeCount) * Math.PI -
-        Math.PI / 2
-
-      const y =
-        Math.sin(latitude) * radius
-
-      const ringRadius =
-        Math.cos(latitude) * radius
-
-      const points = []
-
-      for (
-        let j = 0;
-        j <= latitudeSegments;
-        j++
-      ) {
-        const angle =
-          (j / latitudeSegments) *
-          Math.PI *
-          2
-
-        points.push(
-          new THREE.Vector3(
-            Math.cos(angle) * ringRadius,
-            y,
-            Math.sin(angle) * ringRadius
-          )
-        )
-      }
-
-      const geometry =
-        new THREE.BufferGeometry().setFromPoints(
-          points
-        )
-
-      geometries.push(geometry)
-
-      const line = new THREE.Line(
-        geometry,
-        lineMaterial
-      )
-
-      globe.add(line)
-    }
-
-    /*
-     * VERTICAL LONGITUDE LINES
-     */
-    const longitudeCount = isMobile ? 18 : 28
-    const longitudeSegments = 160
-
-    for (
-      let i = 0;
-      i < longitudeCount;
-      i++
-    ) {
-      const longitude =
-        (i / longitudeCount) *
-        Math.PI *
-        2
-
-      const points = []
-
-      for (
-        let j = 0;
-        j <= longitudeSegments;
-        j++
-      ) {
-        const latitude =
-          (j / longitudeSegments) *
-            Math.PI -
-          Math.PI / 2
-
-        const x =
-          radius *
-          Math.cos(latitude) *
-          Math.cos(longitude)
-
-        const y =
-          radius *
-          Math.sin(latitude)
-
-        const z =
-          radius *
-          Math.cos(latitude) *
-          Math.sin(longitude)
-
-        points.push(
-          new THREE.Vector3(x, y, z)
-        )
-      }
-
-      const geometry =
-        new THREE.BufferGeometry().setFromPoints(
-          points
-        )
-
-      geometries.push(geometry)
-
-      const line = new THREE.Line(
-        geometry,
-        lineMaterial
-      )
-
-      globe.add(line)
-    }
-
-    /*
-     * STARTING ROTATION
-     *
-     * Slight horizontal rotation prevents the
-     * longitude lines from appearing perfectly
-     * symmetrical on first load.
-     */
     globe.rotation.set(
       0,
-      0.12,
+      INITIAL_ROTATION,
       0
     )
 
@@ -235,88 +290,143 @@ export default function GlobeBackground() {
     /*
      * SCROLL STATE
      */
-    let targetScroll = window.scrollY
-    let smoothScroll = targetScroll
+    let targetScroll =
+      window.scrollY
 
-    /*
-     * Base rotation starts at our initial angle.
-     */
-    let baseRotation = 0.12
+    let smoothScroll =
+      targetScroll
 
-    let animationFrame
+    let baseRotation =
+      INITIAL_ROTATION
 
-    /*
-     * SCROLL
-     */
     const handleScroll = () => {
-      targetScroll = window.scrollY
+      targetScroll =
+        window.scrollY
+    }
+
+    /*
+     * RESPONSIVE GLOBE
+     */
+    const updateGlobe = (
+      nextIsMobile
+    ) => {
+      if (
+        nextIsMobile === isMobile
+      ) {
+        return
+      }
+
+      isMobile = nextIsMobile
+
+      config =
+        getGlobeConfig(isMobile)
+
+      const nextGeometry =
+        createGlobeGeometry(config)
+
+      globe.geometry =
+        nextGeometry
+
+      geometry.dispose()
+
+      geometry =
+        nextGeometry
+
+      globe.position.z =
+        config.z
+
+      material.opacity =
+        config.opacity
     }
 
     /*
      * RESIZE
      */
     const handleResize = () => {
-      const width = window.innerWidth
-      const height = window.innerHeight
+      const {
+        width,
+        height,
+      } = getSize()
 
-      camera.aspect = width / height
+      const nextIsMobile =
+        width <
+        DESKTOP_BREAKPOINT
+
+      updateGlobe(
+        nextIsMobile
+      )
+
+      camera.aspect =
+        width / height
+
       camera.updateProjectionMatrix()
 
       renderer.setPixelRatio(
-        Math.min(
-          window.devicePixelRatio,
-          width < DESKTOP_BREAKPOINT
-            ? 1.15
-            : 1.5
-        )
+        getPixelRatio(nextIsMobile)
       )
 
       renderer.setSize(
         width,
-        height
+        height,
+        false
       )
     }
 
-    /*
-     * ANIMATION LOOP
-     */
-    const animate = () => {
-      /*
-       * Smooth the raw browser scroll value.
-       */
-      smoothScroll +=
-        (targetScroll - smoothScroll) *
-        0.025
-
-      /*
-       * Very slow automatic horizontal rotation.
-       */
-      if (!reducedMotion.matches) {
-        baseRotation += 0.00012
-      }
-
-      /*
-       * Scroll rotates the sphere horizontally.
-       *
-       * Increase 0.00002 if you want more movement.
-       */
-      const scrollRotation =
-        smoothScroll * 0.00002
-
-      globe.rotation.y =
-        baseRotation + scrollRotation
-
-      /*
-       * Never allow forward or sideways tilt.
-       */
-      globe.rotation.x = 0
-      globe.rotation.z = 0
-
-      camera.rotation.set(
-        0,
-        0,
-        0
+    const resizeObserver =
+      new ResizeObserver(
+        handleResize
       )
+
+    resizeObserver.observe(mount)
+
+    /*
+     * ANIMATION
+     */
+    let animationFrame = 0
+    let previousTime =
+      performance.now()
+
+    const animate = (time) => {
+      /*
+       * Seconds since previous frame.
+       *
+       * Clamp the value so returning to the
+       * tab does not cause a large animation jump.
+       */
+      const delta = Math.min(
+        (time - previousTime) / 1000,
+        0.1
+      )
+
+      previousTime = time
+
+      if (!reducedMotion) {
+        /*
+         * Frame-rate-independent scroll smoothing.
+         */
+        smoothScroll =
+          THREE.MathUtils.damp(
+            smoothScroll,
+            targetScroll,
+            SCROLL_DAMPING,
+            delta
+          )
+
+        /*
+         * Frame-rate-independent automatic spin.
+         */
+        baseRotation +=
+          AUTO_ROTATION_SPEED *
+          delta
+
+        const scrollRotation =
+          smoothScroll *
+          SCROLL_ROTATION_SPEED
+
+        globe.rotation.y =
+          baseRotation +
+          scrollRotation
+      }
 
       renderer.render(
         scene,
@@ -324,7 +434,7 @@ export default function GlobeBackground() {
       )
 
       animationFrame =
-        window.requestAnimationFrame(
+        requestAnimationFrame(
           animate
         )
     }
@@ -335,55 +445,44 @@ export default function GlobeBackground() {
     window.addEventListener(
       'scroll',
       handleScroll,
-      { passive: true }
+      {
+        passive: true,
+      }
     )
 
-    window.addEventListener(
-      'resize',
-      handleResize
-    )
-
-    animate()
+    animationFrame =
+      requestAnimationFrame(
+        animate
+      )
 
     /*
      * CLEANUP
      */
     return () => {
-      if (animationFrame) {
-        window.cancelAnimationFrame(
-          animationFrame
-        )
-      }
+      cancelAnimationFrame(
+        animationFrame
+      )
 
       window.removeEventListener(
         'scroll',
         handleScroll
       )
 
-      window.removeEventListener(
-        'resize',
-        handleResize
+      motionQuery.removeEventListener(
+        'change',
+        handleMotionChange
       )
+
+      resizeObserver.disconnect()
 
       scene.remove(globe)
 
-      geometries.forEach(
-        (geometry) => {
-          geometry.dispose()
-        }
-      )
+      geometry.dispose()
+      material.dispose()
 
-      lineMaterial.dispose()
       renderer.dispose()
 
-      if (
-        renderer.domElement &&
-        renderer.domElement.parentNode
-      ) {
-        renderer.domElement.parentNode.removeChild(
-          renderer.domElement
-        )
-      }
+      renderer.domElement.remove()
     }
   }, [])
 

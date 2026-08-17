@@ -6,7 +6,7 @@ import homeStyles from "../styles/Home.module.css";
 import styles from "../styles/Intro.module.css";
 
 function Intro() {
-  const textArray = ["Third year Computer Science @uOttawa", "Intermediate Web Developer"];
+  const textArray = ["Fourth year Honours BSc Computer Science @uOttawa", "Graduate Microprogram in Cybersecurity"];
 
   const handlePrimaryCTA = (e) => {
     e.preventDefault();

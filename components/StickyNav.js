@@ -3,7 +3,6 @@ import styles from "../styles/StickyNav.module.css";
 
 const NAV_ITEMS = [
   { id: "intro", label: "Intro" },
-  { id: "service", label: "Service" },
   { id: "work", label: "Work" },
   { id: "education", label: "Education" },
   { id: "contact", label: "Contact" },
