@@ -35,6 +35,24 @@
   --text-letter-spacing: -0.011em;
   --text-line-height: 1.47059;
 
+  /* Hero & section */
+  --text-hero: clamp(2.5rem, 4.5vw, 4rem);
+  --text-section: clamp(1.75rem, 6.5vw, 5rem);
+  --text-body: clamp(1.0625rem, 2vw, 1.1875rem);
+
+  /* Item hierarchy — standalone / full scale */
+  --text-item-1: clamp(1.1875rem, 3.5vw, 1.5rem);
+  --text-item-2: clamp(1.0625rem, 3vw, 1.1875rem);
+  --text-item-3: clamp(1.0625rem, 2.5vw, 1.125rem);
+  --text-item-4: clamp(1rem, 2vw, 1.0625rem);
+
+  /* Item hierarchy — compact cards (workInfo, timeline) */
+  --text-item-compact-1: clamp(0.875rem, 1.5vw, 1.125rem);
+  --text-item-compact-2: clamp(0.75rem, 1.25vw, 0.875rem);
+  --text-item-compact-3: clamp(0.6875rem, 1.1vw, 0.8125rem);
+  --text-caption: clamp(0.75rem, 1.5vw, 0.8125rem);
+  --text-caption-compact: clamp(0.6875rem, 1.2vw, 0.75rem);
+
   /* Spacing */
   --space-2: 0.5rem;
   --space-4: 1rem;
@@ -246,6 +264,56 @@ p {
   padding: 0;
 
   cursor: default;
+}
+
+/*
+  Shared item text hierarchy — used across Education, Work, Blog, Pitch.
+  Apply itemLevel1 (primary) → itemLevel4 (caption) in order inside each entry.
+*/
+.itemLevel1,
+.itemLevel2,
+.itemLevel3,
+.itemLevel4 {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  text-align: start;
+}
+
+.itemLevel1 {
+  font-size: var(--text-item-1);
+  color: white;
+  font-weight: 600;
+  margin-bottom: 0.375rem;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.itemLevel2 {
+  font-size: var(--text-item-2);
+  color: var(--color-text-strong);
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+  line-height: var(--text-line-height);
+  letter-spacing: var(--text-letter-spacing);
+}
+
+.itemLevel3 {
+  font-size: var(--text-item-3);
+  color: var(--color-text-muted);
+  font-weight: 400;
+  margin-bottom: 0.75rem;
+  line-height: var(--text-line-height);
+  letter-spacing: var(--text-letter-spacing);
+}
+
+.itemLevel4 {
+  font-size: var(--text-item-4);
+  color: var(--color-text-subtle);
+  font-weight: 400;
+  margin-bottom: 0;
+  line-height: var(--text-line-height);
+  letter-spacing: var(--text-letter-spacing);
 }
 
 /* Mobile typography */

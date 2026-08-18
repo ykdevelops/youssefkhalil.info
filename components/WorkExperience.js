@@ -58,7 +58,7 @@ export default function WorkExperience() {
             const color = TIMELINE_COLORS[i % TIMELINE_COLORS.length];
             return (
               <div key={i} className={timelineStyles.timelineItem}>
-                <p className={timelineStyles.timelineDate}>{exp.date}</p>
+                <p className="itemLevel4">{exp.date}</p>
                 <div
                   className={timelineStyles.timelineNode}
                   style={{ borderColor: color }}
@@ -75,12 +75,8 @@ export default function WorkExperience() {
                     />
                   </Suspense>
                   <div className={timelineStyles.timelineText}>
-                    <h2
-                      className={timelineStyles.timelineTitle}
-                    >
-                      {exp.company}
-                    </h2>
-                    <p className={timelineStyles.timelineRole}>{exp.role}</p>
+                    <h2 className="itemLevel1">{exp.company}</h2>
+                    <p className="itemLevel2">{exp.role}</p>
                   </div>
                 </div>
               </div>

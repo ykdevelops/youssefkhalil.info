@@ -97,10 +97,10 @@ export default function Pitch() {
               >
                 <div className={styles.pitchCardInner}>
                   <div className={styles.pitchCardFront}>
-                    <h3 className={styles.pitchExpectationTitle}>Strategy session</h3>
+                    <h3 className={`itemLevel1 ${styles.pitchExpectationTitle}`}>Strategy session</h3>
                   </div>
                   <div className={styles.pitchCardBack}>
-                    <p className={styles.pitchExpectationDescription}>
+                    <p className={`itemLevel3 ${styles.pitchExpectationDescription}`}>
                       Goals, brand, and user journey, plus a clear plan for what we are improving first.
                     </p>
                   </div>
@@ -120,10 +120,10 @@ export default function Pitch() {
               >
                 <div className={styles.pitchCardInner}>
                   <div className={styles.pitchCardFront}>
-                    <h3 className={styles.pitchExpectationTitle}>Technical and content audit</h3>
+                    <h3 className={`itemLevel1 ${styles.pitchExpectationTitle}`}>Technical and content audit</h3>
                   </div>
                   <div className={styles.pitchCardBack}>
-                    <p className={styles.pitchExpectationDescription}>
+                    <p className={`itemLevel3 ${styles.pitchExpectationDescription}`}>
                       A focused review, with recommendations ranked by research and impact.
                     </p>
                   </div>
@@ -143,10 +143,10 @@ export default function Pitch() {
               >
                 <div className={styles.pitchCardInner}>
                   <div className={styles.pitchCardFront}>
-                    <h3 className={styles.pitchExpectationTitle}>Build, polish, launch</h3>
+                    <h3 className={`itemLevel1 ${styles.pitchExpectationTitle}`}>Build, polish, launch</h3>
                   </div>
                   <div className={styles.pitchCardBack}>
-                    <p className={styles.pitchExpectationDescription}>
+                    <p className={`itemLevel3 ${styles.pitchExpectationDescription}`}>
                       Implementation, QA, and a clean rollout.
                     </p>
                   </div>
@@ -166,10 +166,10 @@ export default function Pitch() {
               >
                 <div className={styles.pitchCardInner}>
                   <div className={styles.pitchCardFront}>
-                    <h3 className={styles.pitchExpectationTitle}>Website care</h3>
+                    <h3 className={`itemLevel1 ${styles.pitchExpectationTitle}`}>Website care</h3>
                   </div>
                   <div className={styles.pitchCardBack}>
-                    <p className={styles.pitchExpectationDescription}>
+                    <p className={`itemLevel3 ${styles.pitchExpectationDescription}`}>
                       Proactive upkeep, quick fixes, and ongoing updates when your business changes.
                     </p>
                   </div>

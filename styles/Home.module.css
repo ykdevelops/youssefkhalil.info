@@ -6,51 +6,6 @@
   - TV / Large screens: 1920px+ (@media (min-width: 1920px))
 */
 
-/* ============================================
-   STANDARDIZED TEXT HIERARCHY SYSTEM
-   Brightest → Darkest, Largest → Smallest
-   ============================================ */
-
-/* Level 1: TOP ROW - Largest, Brightest White */
-.itemLevel1 {
-  font-size: clamp(1.1875rem, 3.5vw, 1.5rem);
-  color: white;
-  font-weight: 600;
-  margin-bottom: 0.375rem;
-  line-height: 1.2;
-  letter-spacing: -0.015em;
-}
-
-/* Level 2: SECOND ROW - Medium, Light Grey */
-.itemLevel2 {
-  font-size: clamp(1.0625rem, 3vw, 1.1875rem);
-  color: var(--color-text-strong);
-  font-weight: 400;
-  margin-bottom: 0.5rem;
-  line-height: var(--text-line-height);
-  letter-spacing: var(--text-letter-spacing);
-}
-
-/* Level 3: THIRD ROW - Smaller, Medium Grey */
-.itemLevel3 {
-  font-size: clamp(1.0625rem, 2.5vw, 1.125rem);
-  color: var(--color-text-muted);
-  font-weight: 400;
-  margin-bottom: 0.75rem;
-  line-height: var(--text-line-height);
-  letter-spacing: var(--text-letter-spacing);
-}
-
-/* Level 4: BOTTOM ROW - Smallest, Darkest Grey */
-.itemLevel4 {
-  font-size: clamp(1rem, 2vw, 1.0625rem);
-  color: var(--color-text-subtle);
-  font-weight: 400;
-  margin-bottom: 0;
-  line-height: var(--text-line-height);
-  letter-spacing: var(--text-letter-spacing);
-}
-
 /* #region general */
 
 .container {
@@ -119,7 +74,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  font-size: 7vw;
+  font-size: var(--text-section);
   height: 100%;
   padding-top: 0;
   padding-bottom: 0;
@@ -230,6 +185,42 @@
   padding-left: 1rem;
   margin: 0;
 }
+
+/* Work Experience: center section header (icon + title) at all breakpoints */
+:global(#work) .containerTitleRow {
+  justify-content: center;
+}
+
+:global(#work) .containerTitleRow > *:first-child {
+  width: auto;
+  flex: 0 0 auto;
+}
+
+:global(#work) .containerTitleRow .sectionTitle {
+  width: auto;
+  flex: 0 0 auto;
+  text-align: center;
+  justify-content: center;
+  padding-left: 0;
+}
+
+/* Education: center section header (icon + title) at all breakpoints */
+:global(#education) .containerTitleRow {
+  justify-content: center;
+}
+
+:global(#education) .containerTitleRow > *:first-child {
+  width: auto;
+  flex: 0 0 auto;
+}
+
+:global(#education) .containerTitleRow .sectionTitle {
+  width: auto;
+  flex: 0 0 auto;
+  text-align: center;
+  justify-content: center;
+  padding-left: 0;
+}
 /* #endregion Shared section header */
 /* Extra small mobile devices - width less than 350px */
 @media (max-width: 350px) {
@@ -323,7 +314,7 @@
   
   /* Level 1: Main Section Titles (Largest) - 6-7vw */
   .sectionTitle {
-    font-size: clamp(1.75rem, 6.5vw, 4rem);
+    font-size: var(--text-section);
     line-height: 1.2;
     text-align: center;
   }

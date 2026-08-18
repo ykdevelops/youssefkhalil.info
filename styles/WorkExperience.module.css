@@ -46,17 +46,17 @@
   padding-bottom: 0;
 }
 
-.timelineDate {
+.timelineItem :global(.itemLevel4) {
   grid-column: 1;
   justify-self: end;
   align-self: center;
   text-align: right;
-  font-size: clamp(0.75rem, 1.1vw, 0.875rem);
+  font-size: var(--text-caption-compact);
   color: var(--color-text-muted);
-  margin: 0;
   padding-right: 0.25rem;
   line-height: 1.5;
   white-space: nowrap;
+  margin-bottom: 0;
 }
 
 .timelineNode {
@@ -92,21 +92,20 @@
   flex: 1;
 }
 
-.timelineTitle {
-  font-size: clamp(1rem, 2vw, 1.125rem);
+.timelineText :global(.itemLevel1) {
+  font-size: var(--text-item-compact-1);
   font-weight: 700;
-  color: white;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin: 0 0 0.375rem 0;
+  margin-bottom: 0.375rem;
   line-height: 1.3;
 }
 
-.timelineRole {
-  font-size: clamp(0.875rem, 1.35vw, 1rem);
-  color: var(--color-text-strong);
+.timelineText :global(.itemLevel2) {
+  font-size: var(--text-item-compact-2);
   font-weight: 500;
-  margin: 0 0 0.25rem 0;
+  color: var(--color-text-strong);
+  margin-bottom: 0.25rem;
   line-height: 1.4;
   width: 100%;
 }
@@ -120,22 +119,22 @@
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* iPad/Tablet: 768–1023px — use the large (2×) sizing */
+/* iPad/Tablet: 768–1023px */
 @media (min-width: 768px) and (max-width: 1023px) {
   .timeline {
     --date-col: 21.5rem;
   }
 
-  .timelineDate {
-    font-size: clamp(1.5rem, 2.2vw, 1.75rem);
+  .timelineItem :global(.itemLevel4) {
+    font-size: var(--text-caption);
   }
 
-  .timelineTitle {
-    font-size: clamp(2rem, 4vw, 2.25rem);
+  .timelineText :global(.itemLevel1) {
+    font-size: var(--text-item-compact-1);
   }
 
-  .timelineRole {
-    font-size: clamp(1.875rem, 3vw, 2.125rem);
+  .timelineText :global(.itemLevel2) {
+    font-size: var(--text-item-compact-2);
   }
 
   .timelineLogo {
@@ -148,22 +147,10 @@
   }
 }
 
-/* Large screens: 1920px+ — use the large (2×) sizing */
+/* Large screens: 1920px+ */
 @media (min-width: 1920px) {
   .timeline {
     --date-col: 21.5rem;
-  }
-
-  .timelineDate {
-    font-size: clamp(1.5rem, 2.2vw, 1.75rem);
-  }
-
-  .timelineTitle {
-    font-size: clamp(2rem, 4vw, 2.25rem);
-  }
-
-  .timelineRole {
-    font-size: clamp(1.875rem, 2vw, 1.125rem);
   }
 
   .timelineLogo {
@@ -189,16 +176,10 @@
     --line-extra-bottom: 0.6rem;
   }
 
-  .timelineDate {
-    font-size: 0.6875rem;
-  }
-
   .timelineLogo {
     width: 3.5rem;
     height: 3.5rem;
   }
-
-  /* node sizing handled by CSS variables above */
 }
 
 @media (prefers-reduced-motion: reduce) {

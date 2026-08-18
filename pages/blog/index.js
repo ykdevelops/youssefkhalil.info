@@ -44,11 +44,11 @@ export default function BlogIndex() {
                         className={workStyles.workLogo}
                       />
                       <div className={workStyles.workInfo}>
-                        <time className={workStyles.workDate} dateTime={post.dateTime}>
+                        <time className="itemLevel3" dateTime={post.dateTime}>
                           {post.date}
                         </time>
-                        <h2 className={workStyles.workCompanyTitle}>{post.title}</h2>
-                        <p className={workStyles.workPositionTitle}>{post.excerpt}</p>
+                        <h2 className="itemLevel1">{post.title}</h2>
+                        <p className="itemLevel2">{post.excerpt}</p>
                         <span className={styles.readHint}>Read post →</span>
                       </div>
                     </div>

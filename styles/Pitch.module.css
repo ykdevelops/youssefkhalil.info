@@ -301,24 +301,12 @@
 
 .pitchExpectationTitle {
   margin: 0;
-  /* Uses itemLevel1 base styles */
-  font-size: clamp(1.1875rem, 3.5vw, 1.5rem);
-  font-weight: 600;
-  color: white;
-  line-height: 1.2;
-  letter-spacing: -0.015em;
   text-align: center;
 }
 
 .pitchExpectationDescription {
   margin: 0;
-  /* Uses itemLevel3 base styles */
-  font-size: clamp(0.9375rem, 2vw, 1.0625rem);
-  line-height: var(--text-line-height);
-  color: var(--color-text-muted);
-  font-weight: 400;
   text-align: center;
-  letter-spacing: var(--text-letter-spacing);
   max-width: 100%;
 }
 
@@ -440,19 +428,13 @@
     flex: 0 0 auto !important;
   }
 
-  /* Mobile Text Hierarchy - Pitch-only */
+  /* Mobile Text Hierarchy - Pitch-only layout tweaks */
   .pitchExpectationTitle {
-    font-size: clamp(1.25rem, 3.75vw, 1.75rem) !important;
-    color: white !important;
-    font-weight: bold !important;
     line-height: 1.4;
     margin-bottom: 0.25rem !important;
   }
 
   .pitchExpectationDescription {
-    font-size: clamp(1.25rem, 2.75vw, 1.5rem) !important;
-    color: var(--color-text-muted) !important;
-    font-weight: normal !important;
     line-height: 1.5;
     margin-bottom: 0.75rem !important;
   }
