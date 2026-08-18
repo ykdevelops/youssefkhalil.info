@@ -121,23 +121,7 @@ function Intro() {
                 <span className={homeStyles.contactIconLabel}>GitHub</span>
               </a>
 
-              <a
-                href="https://www.youtube.com/channel/UCRIft9RM1NOq6m0MIJeiJJg"
-                target="_blank"
-                rel="noreferrer"
-                className={homeStyles.contactIconLink}
-              >
-                <Suspense fallback={<div className={homeStyles.loaderImage}></div>}>
-                  <Image
-                    src="https://ykdevelops.s3.us-east-2.amazonaws.com/contact/youtube1.png"
-                    alt="youtube"
-                    width={500}
-                    height={500}
-                    className={homeStyles.contactIconSmall}
-                  />
-                </Suspense>
-                <span className={homeStyles.contactIconLabel}>YouTube</span>
-              </a>
+         
             </div>
           </div>
         </div>

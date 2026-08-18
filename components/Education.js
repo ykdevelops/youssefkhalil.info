@@ -22,26 +22,41 @@ export default function Education() {
         </div>
 
         {/* University of Ottawa (Current) */}
-        <div className={workStyles.workCompany}>
-          <div className={workStyles.workCompanyHeader}>
-            <Suspense fallback={<div className={homeStyles['loading-image']}></div>}>
-              <Image
-                src="https://ykdevelops.s3.us-east-2.amazonaws.com/education/uottawa.png"
-                alt="uOttawaLogo"
-                width={150}
-                height={150}
-                className={workStyles.workLogo}
-              />
-            </Suspense>
-            <div className={workStyles.workInfo}>
-              <h2 className={styles.eduItemDegree}>Honours BSc Computer Science</h2>
-              <h1 className={styles.eduItemTitle}>
-                University of Ottawa
-              </h1>
-              <h2 className={styles.eduItemDate}>Sep 2024 – Sep 2027</h2>
-            </div>
-          </div>
-        </div>
+<div className={workStyles.workCompany}>
+  <div className={workStyles.workCompanyHeader}>
+    <Suspense
+      fallback={
+        <div className={homeStyles['loading-image']}></div>
+      }
+    >
+      <Image
+        src="https://ykdevelops.s3.us-east-2.amazonaws.com/education/uottawa.png"
+        alt="University of Ottawa logo"
+        width={150}
+        height={150}
+        className={workStyles.workLogo}
+      />
+    </Suspense>
+
+    <div className={workStyles.workInfo}>
+      <h2 className={styles.eduItemDegree}>
+        Honours BSc Computer Science
+      </h2>
+
+      <h2 className={styles.eduItemDegree}>
+        Postgraduate Microprogram in Cybersecurity
+      </h2>
+
+      <h1 className={styles.eduItemTitle}>
+        University of Ottawa
+      </h1>
+
+      <h2 className={styles.eduItemDate}>
+        Sep 2024 – Sep 2027
+      </h2>
+    </div>
+  </div>
+</div>
 
         {/* Algonquin College */}
         <div className={workStyles.workCompany}>
