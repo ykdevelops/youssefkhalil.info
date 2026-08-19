@@ -259,6 +259,7 @@
 
   .rightHalf {
     padding: 2rem 1.5rem;
+    background: none;
   }
 
   .textContainer {
@@ -295,6 +296,10 @@
   .textContainer {
     align-items: center;
     text-align: center;
+  }
+
+  .rightHalf {
+    background: none;
   }
 
   .textContainer > .contactIconLinks {
