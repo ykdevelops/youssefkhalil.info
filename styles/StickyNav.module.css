@@ -57,6 +57,24 @@
   outline-offset: 2px;
 }
 
+@media (min-width: 1440px) {
+  .stickyWrap {
+    padding: 1rem 1rem 1.5rem;
+  }
+
+  .inner {
+    width: min(1240px, 100%);
+    gap: 0.7rem;
+    padding: 0.65rem 1rem;
+    border-width: 1.5px;
+  }
+
+  .navLink {
+    padding: 0.52rem 0.95rem;
+    font-size: 1.08rem;
+  }
+}
+
 /* Mobile: 0–767px - Hide nav on mobile */
 @media (max-width: 767px) {
   .stickyWrap {

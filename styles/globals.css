@@ -387,6 +387,44 @@ p {
 }
 
 /*
+  Large laptops / desktop wide screens
+*/
+@media (min-width: 1440px) {
+  :root {
+    --text-hero: clamp(3.25rem, 4.6vw, 5.75rem);
+    --text-section: clamp(3.5rem, 5vw, 6rem);
+    --text-body: clamp(1.25rem, 1.7vw, 1.5rem);
+
+    --text-item-1: clamp(1.35rem, 1.9vw, 1.7rem);
+    --text-item-2: clamp(1.2rem, 1.6vw, 1.45rem);
+    --text-item-3: clamp(1.1rem, 1.35vw, 1.3rem);
+    --text-item-4: clamp(1.02rem, 1.2vw, 1.15rem);
+
+    --text-item-compact-1: clamp(1.05rem, 1.25vw, 1.3rem);
+    --text-item-compact-2: clamp(0.95rem, 1.1vw, 1.15rem);
+    --text-item-compact-3: clamp(0.88rem, 1vw, 1rem);
+    --text-caption: clamp(0.88rem, 1.05vw, 1rem);
+    --text-caption-compact: clamp(0.82rem, 1vw, 0.95rem);
+  }
+
+  h1 {
+    font-size: clamp(4rem, 5.2vw, 6rem);
+  }
+
+  h2 {
+    font-size: clamp(2.2rem, 2.8vw, 3rem);
+  }
+
+  h3 {
+    font-size: clamp(1.65rem, 2vw, 2.1rem);
+  }
+
+  p {
+    font-size: clamp(1.2rem, 1.5vw, 1.4rem);
+  }
+}
+
+/*
   TV / Very large displays
 */
 @media (min-width: 1920px) {
