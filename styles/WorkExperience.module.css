@@ -3,9 +3,8 @@
 .timeline {
   position: relative;
   width: 100%;
-  max-width: 100%;
+  max-width: 68rem;
   margin: 0 auto;
-  --date-col: 10.75rem;
   --line-col: 2.25rem;
   --col-gap: 1rem;
   --row-gap: 2.25rem;
@@ -19,7 +18,7 @@
 
 .timelineLine {
   position: absolute;
-  left: calc(var(--date-col) + var(--col-gap) + (var(--line-col) / 2) - 1px);
+  left: calc(50% - 1px);
   top: calc(var(--line-cap) - var(--line-extra-top));
   bottom: calc(var(--line-cap) - var(--line-extra-bottom));
   width: 2px;
@@ -36,7 +35,7 @@
 
 .timelineItem {
   display: grid;
-  grid-template-columns: var(--date-col) var(--line-col) 1fr;
+  grid-template-columns: minmax(0, 1fr) var(--line-col) minmax(0, 1fr);
   column-gap: var(--col-gap);
   align-items: start;
   padding-bottom: var(--row-gap);
@@ -122,7 +121,7 @@
 /* iPad/Tablet: 768–1023px */
 @media (min-width: 768px) and (max-width: 1023px) {
   .timeline {
-    --date-col: 21.5rem;
+    max-width: 56rem;
   }
 
   .timelineItem :global(.itemLevel4) {
@@ -149,10 +148,6 @@
 
 /* Large screens: 1920px+ */
 @media (min-width: 1920px) {
-  .timeline {
-    --date-col: 21.5rem;
-  }
-
   .timelineLogo {
     width: 8rem;
     height: 8rem;
@@ -166,9 +161,9 @@
 /* Mobile: adjust layout for smaller screens */
 @media (max-width: 767px) {
   .timeline {
-    --date-col: 9.25rem;
+    max-width: 100%;
     --line-col: 2rem;
-    --col-gap: 0.75rem;
+    --col-gap: 0.5rem;
     --row-gap: 2.1rem;
     --node-size: 0.875rem;
     --node-border: 2px;
@@ -176,9 +171,67 @@
     --line-extra-bottom: 0.6rem;
   }
 
+  .timelineLine {
+    left: calc((var(--line-col) / 2) - 1px);
+  }
+
+  .timelineItem {
+    grid-template-columns: var(--line-col) minmax(0, 1fr);
+    column-gap: var(--col-gap);
+    row-gap: 0.5rem;
+    align-items: start;
+  }
+
+  .timelineNode {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+    align-self: center;
+  }
+
+  .timelineContent {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0.75rem;
+  }
+
+  .timelineText {
+    min-width: 0;
+    align-self: flex-start;
+    padding-top: 0.125rem;
+  }
+
+  .timelineText :global(.itemLevel1),
+  .timelineText :global(.itemLevel2) {
+    text-align: left;
+    width: 100%;
+  }
+
+  .timelineText :global(.itemLevel1) {
+    margin-bottom: 0.2rem;
+    line-height: 1.25;
+  }
+
+  .timelineText :global(.itemLevel2) {
+    margin-bottom: 0;
+    line-height: 1.35;
+  }
+
+  .timelineItem :global(.itemLevel4) {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
+    text-align: left;
+    padding-right: 0;
+    margin-top: -0.1rem;
+  }
+
   .timelineLogo {
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 3rem;
+    height: 3rem;
   }
 }
 
