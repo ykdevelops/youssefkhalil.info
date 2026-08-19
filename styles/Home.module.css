@@ -189,6 +189,7 @@
 /* Work Experience: center section header (icon + title) at all breakpoints */
 :global(#work) .containerTitleRow {
   justify-content: center;
+  gap: 0.75rem;
 }
 
 :global(#work) .containerTitleRow > *:first-child {
@@ -464,6 +465,37 @@
     opacity: 1;
   }
 
+}
+
+@media (min-width: 1440px) {
+  .sectionTitleRow {
+    max-width: 1200px;
+    padding-top: 6rem;
+  }
+
+  .sectionTitle {
+    font-size: clamp(4rem, 5vw, 6rem);
+  }
+
+  .sectionTitleIcon,
+  .sectionTitleIcon2 {
+    width: 80px;
+    height: 80px;
+  }
+
+  .containerTitleRow .sectionTitleIcon {
+    max-width: 96px;
+    max-height: 96px;
+  }
+
+  .contactIconSmall {
+    width: 72px;
+    height: 72px;
+  }
+
+  .contactIconLabel {
+    font-size: 1.35rem;
+  }
 }
 
 

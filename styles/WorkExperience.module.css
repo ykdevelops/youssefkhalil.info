@@ -33,6 +33,24 @@
   }
 }
 
+@media (min-width: 1440px) {
+  .timeline {
+    max-width: 78rem;
+    --line-col: 2.5rem;
+    --col-gap: 1.25rem;
+    --row-gap: 2.75rem;
+  }
+
+  .timelineLogo {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .timelineContent {
+    gap: 1.25rem;
+  }
+}
+
 .timelineItem {
   display: grid;
   grid-template-columns: minmax(0, 1fr) var(--line-col) minmax(0, 1fr);
