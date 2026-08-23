@@ -18,6 +18,26 @@ export async function getStaticProps({ params }) {
   return { props: { post } };
 }
 
+function renderInlineContent(content) {
+  if (typeof content === 'string') return content;
+
+  return content.map((segment, index) => {
+    if (segment.type === 'strong') {
+      return <strong key={index}>{segment.text}</strong>;
+    }
+
+    if (segment.type === 'code') {
+      return (
+        <code key={index} className={styles.inlineCode}>
+          {segment.text}
+        </code>
+      );
+    }
+
+    return <React.Fragment key={index}>{segment.text}</React.Fragment>;
+  });
+}
+
 export default function BlogPost({ post }) {
   return (
     <>
@@ -41,23 +61,35 @@ export default function BlogPost({ post }) {
             </Link>
           </nav>
 
-          <header className={styles.header}>
-            <Image
-              src={post.thumb}
-              alt=""
-              width={800}
-              height={450}
-              className={styles.heroImage}
-            />
-            <time className={styles.date} dateTime={post.dateTime}>
-              {post.date}
-            </time>
-            <h1 className={styles.title}>{post.title}</h1>
-          </header>
+          <div className={styles.readingPanel}>
+            <header className={styles.header}>
+              {post.showHero !== false && (
+                <Image
+                  src={post.thumb}
+                  alt=""
+                  width={800}
+                  height={450}
+                  className={styles.heroImage}
+                />
+              )}
+              <div className={styles.articleMeta}>
+                <span className={styles.category}>{post.category || 'Blog'}</span>
+                <span aria-hidden="true">•</span>
+                <time dateTime={post.dateTime}>{post.date}</time>
+                {post.readTime && (
+                  <>
+                    <span aria-hidden="true">•</span>
+                    <span>{post.readTime}</span>
+                  </>
+                )}
+              </div>
+              <h1 className={styles.title}>{post.title}</h1>
+              <p className={styles.dek}>{post.excerpt}</p>
+            </header>
 
-          <div className={styles.body}>
-            {post.body.map((block, i) => {
-              switch (block.type) {
+            <div className={styles.body}>
+              {post.body.map((block, i) => {
+                switch (block.type) {
                 case 'heading':
                   return (
                     <h2 key={i} className={styles.heading}>
@@ -80,15 +112,37 @@ export default function BlogPost({ post }) {
                       ))}
                     </ul>
                   );
+                case 'flow':
+                  return (
+                    <div
+                      key={i}
+                      className={`${styles.flow} ${block.vertical ? styles.flowVertical : ''}`}
+                      aria-label={block.items.join(' to ')}
+                    >
+                      {block.items.map((item, itemIndex) => (
+                        <React.Fragment key={item}>
+                          <span className={styles.flowItem}>{item}</span>
+                          {itemIndex < block.items.length - 1 && (
+                            <span className={styles.flowArrow} aria-hidden="true">
+                              →
+                            </span>
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  );
+                case 'divider':
+                  return <hr key={i} className={styles.divider} />;
                 case 'paragraph':
                 default:
                   return (
                     <p key={i} className={styles.paragraph}>
-                      {block.content}
+                      {renderInlineContent(block.content)}
                     </p>
                   );
-              }
-            })}
+                }
+              })}
+            </div>
           </div>
 
           <nav className={styles.footerLinks} aria-label="Post navigation">
