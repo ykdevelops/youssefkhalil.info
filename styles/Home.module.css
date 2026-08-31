@@ -222,6 +222,25 @@
   justify-content: center;
   padding-left: 0;
 }
+
+/* Blog: center section header (icon + title) at all breakpoints */
+:global(#blog) .containerTitleRow {
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+:global(#blog) .containerTitleRow > *:first-child {
+  width: auto;
+  flex: 0 0 auto;
+}
+
+:global(#blog) .containerTitleRow .sectionTitle {
+  width: auto;
+  flex: 0 0 auto;
+  text-align: center;
+  justify-content: center;
+  padding-left: 0;
+}
 /* #endregion Shared section header */
 /* Extra small mobile devices - width less than 350px */
 @media (max-width: 350px) {

@@ -3,8 +3,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import { blogPosts } from '../../lib/blogPosts';
-import homeStyles from '../../styles/Home.module.css';
-import workStyles from '../../styles/Work.module.css';
 import styles from '../../styles/Blog.module.css';
 import pageStyles from '../../styles/BlogPage.module.css';
 
@@ -24,9 +22,11 @@ export default function BlogIndex() {
             </Link>
           </nav>
           <h1 className={pageStyles.blogPageTitle}>Blog</h1>
-          <p className={pageStyles.blogPageSubtitle}>All posts</p>
+          <p className={pageStyles.blogPageSubtitle}>
+            Writing about software, infrastructure, cybersecurity, and learning by building.
+          </p>
 
-          <div id="blog" className={workStyles.workContainer}>
+          <div className={`${styles.blogGrid} ${styles.blogGridColumn}`}>
             {blogPosts.map((post) => (
                 <Link
                   key={post.id}
@@ -34,33 +34,49 @@ export default function BlogIndex() {
                   className={styles.blogCardLink}
                   aria-label={`Read ${post.title}`}
                 >
-                  <div className={`${workStyles.workCompany} ${styles.blogCard}`}>
-                    <div className={workStyles.workCompanyHeader}>
-                      <Image
-                        src={post.thumb}
-                        alt=""
-                        width={150}
-                        height={150}
-                        className={workStyles.workLogo}
-                      />
-                      <div className={workStyles.workInfo}>
-                        <time className="itemLevel3" dateTime={post.dateTime}>
-                          {post.date}
-                        </time>
-                        <h2 className="itemLevel1">{post.title}</h2>
-                        <p className="itemLevel2">{post.excerpt}</p>
-                        <span className={styles.readHint}>Read post →</span>
+                  <article className={`${styles.blogCard} ${post.showHero === false ? styles.textOnlyCard : ''}`}>
+                    {post.showHero !== false && (
+                      <div className={styles.thumbnailWrap}>
+                        <Image
+                          src={post.thumb}
+                          alt=""
+                          width={150}
+                          height={150}
+                          className={styles.thumbnail}
+                        />
                       </div>
+                    )}
+                    <div className={styles.cardContent}>
+                      <div className={styles.cardMeta}>
+                        <span>{post.category || 'Blog'}</span>
+                        <span aria-hidden="true">•</span>
+                        <time dateTime={post.dateTime}>{post.date}</time>
+                      </div>
+                      <h2 className={styles.cardTitle}>{post.title}</h2>
+                      {post.tags?.length > 0 && (
+                        <div className={styles.cardTags} aria-label="Technologies used">
+                          {post.tags.map((tag) => (
+                            <span key={tag} className={styles.cardTag}>
+                              #{tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      <p className={styles.cardExcerpt}>{post.excerpt}</p>
+                      <span className={styles.readHint}>
+                        {post.readTime || 'Read post'}
+                        <span className={styles.readArrow} aria-hidden="true">→</span>
+                      </span>
                     </div>
-                  </div>
+                  </article>
                 </Link>
               ))}
+          </div>
 
-            <div className={styles.seeMoreWrap}>
-              <Link href="/" className={styles.seeMore}>
-                ← Back to home
-              </Link>
-            </div>
+          <div className={styles.seeMoreWrap}>
+            <Link href="/" className={pageStyles.blogPageNavLink}>
+              ← Back to home
+            </Link>
           </div>
         </div>
       </div>

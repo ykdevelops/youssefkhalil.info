@@ -8,6 +8,7 @@ import Pitch from '../components/Pitch'
 import WorkExperience from '../components/WorkExperience'
 import Contact from '../components/Contact'
 import StickyNav from '../components/StickyNav'
+import Blog from '../components/Blog'
 
 export default function Home() {
   const [showScrollDown, setShowScrollDown] = useState(false)
@@ -92,6 +93,7 @@ export default function Home() {
 
       <WorkExperience />
       <Education />
+      <Blog />
       <Contact />
     </div>
   )
