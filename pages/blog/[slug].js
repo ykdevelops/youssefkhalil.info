@@ -34,6 +34,10 @@ function renderInlineContent(content) {
       );
     }
 
+    if (segment.type === 'emphasis') {
+      return <em key={index}>{segment.text}</em>;
+    }
+
     return <React.Fragment key={index}>{segment.text}</React.Fragment>;
   });
 }
@@ -84,6 +88,15 @@ export default function BlogPost({ post }) {
                 )}
               </div>
               <h1 className={styles.title}>{post.title}</h1>
+              {post.tags?.length > 0 && (
+                <div className={styles.tags} aria-label="Technologies used">
+                  {post.tags.map((tag) => (
+                    <span key={tag} className={styles.tag}>
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              )}
               <p className={styles.dek}>{post.excerpt}</p>
             </header>
 
@@ -146,10 +159,10 @@ export default function BlogPost({ post }) {
           </div>
 
           <nav className={styles.footerLinks} aria-label="Post navigation">
-            <Link href="/blog" className={styles.backLink}>
+            <Link href="/blog" className={pageStyles.blogPageNavLink}>
               ← All posts
             </Link>
-            <Link href="/" className={styles.backLink}>
+            <Link href="/" className={pageStyles.blogPageNavLink}>
               ← Home
             </Link>
           </nav>

@@ -23,7 +23,7 @@ export default function Blog() {
           <h1 className={homeStyles.sectionTitle}>Blog</h1>
         </div>
 
-        <div className={styles.blogGrid}>
+        <div className={`${styles.blogGrid} ${styles.blogGridColumn}`}>
           {blogPosts.map((post) => (
             <Link
               key={post.id}
@@ -50,6 +50,15 @@ export default function Blog() {
                     <time dateTime={post.dateTime}>{post.date}</time>
                   </div>
                   <h2 className={styles.cardTitle}>{post.title}</h2>
+                  {post.tags?.length > 0 && (
+                    <div className={styles.cardTags} aria-label="Technologies used">
+                      {post.tags.map((tag) => (
+                        <span key={tag} className={styles.cardTag}>
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   <p className={styles.cardExcerpt}>{post.excerpt}</p>
                   <span className={styles.readHint}>
                     {post.readTime || 'Read post'}
@@ -59,12 +68,6 @@ export default function Blog() {
               </article>
             </Link>
           ))}
-        </div>
-
-        <div className={styles.seeMoreWrap}>
-          <Link href="/blog" className={styles.seeMore}>
-            See more →
-          </Link>
         </div>
       </div>
     </div>

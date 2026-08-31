@@ -11,7 +11,8 @@
 
 .blogGridColumn {
   grid-template-columns: minmax(0, 1fr);
-  max-width: 820px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .blogCardLink {
@@ -128,6 +129,20 @@
   letter-spacing: -0.025em;
 }
 
+.cardTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.55rem;
+  margin: -0.1rem 0 0.8rem;
+}
+
+.cardTag {
+  color: #ffb38f;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
 .cardExcerpt {
   display: -webkit-box;
   margin: 0 0 1rem;
@@ -161,36 +176,6 @@
 .seeMoreWrap {
   margin-top: 2rem;
   text-align: center;
-}
-
-.seeMore {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  color: white;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    background 0.2s ease;
-}
-
-.seeMore:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 140, 66, 0.45);
-  background: rgba(255, 255, 255, 0.13);
-}
-
-.seeMore:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(255, 140, 66, 0.3);
 }
 
 @media (max-width: 767px) {
@@ -231,15 +216,13 @@
 @media (prefers-reduced-motion: reduce) {
   .blogCard,
   .thumbnail,
-  .readArrow,
-  .seeMore {
+  .readArrow {
     transition: none;
   }
 
   .blogCardLink:hover .blogCard,
   .blogCardLink:hover .thumbnail,
-  .blogCardLink:hover .readArrow,
-  .seeMore:hover {
+  .blogCardLink:hover .readArrow {
     transform: none;
   }
 }

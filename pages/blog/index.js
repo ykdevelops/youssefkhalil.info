@@ -53,6 +53,15 @@ export default function BlogIndex() {
                         <time dateTime={post.dateTime}>{post.date}</time>
                       </div>
                       <h2 className={styles.cardTitle}>{post.title}</h2>
+                      {post.tags?.length > 0 && (
+                        <div className={styles.cardTags} aria-label="Technologies used">
+                          {post.tags.map((tag) => (
+                            <span key={tag} className={styles.cardTag}>
+                              #{tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                       <p className={styles.cardExcerpt}>{post.excerpt}</p>
                       <span className={styles.readHint}>
                         {post.readTime || 'Read post'}
@@ -65,7 +74,7 @@ export default function BlogIndex() {
           </div>
 
           <div className={styles.seeMoreWrap}>
-            <Link href="/" className={styles.seeMore}>
+            <Link href="/" className={pageStyles.blogPageNavLink}>
               ← Back to home
             </Link>
           </div>
